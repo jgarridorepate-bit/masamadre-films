@@ -62,24 +62,19 @@
 
   /* film grain, fixed over everything */
   .grain {
-    position: fixed; inset: -50%; z-index: 50; pointer-events: none;
-    opacity: .09; background-image: var(--grain); background-size: 180px;
-    animation: grain .9s steps(1) infinite;
+    position: fixed; inset: 0; z-index: 50; pointer-events: none;
+    opacity: .08; background-image: var(--grain0); background-size: 180px;
+    animation: grain .84s steps(1) infinite;
   }
   @keyframes grain {
-    0% { transform: translate(0,0); opacity: .09 }
-    8% { transform: translate(-2%,3%); opacity: .08 }
-    17% { transform: translate(3%,-1%); opacity: .1 }
-    25% { transform: translate(-4%,-3%); opacity: .07 }
-    33% { transform: translate(1%,4%); opacity: .09 }
-    42% { transform: translate(-3%,1%) scale(1.02); opacity: .11 }
-    50% { transform: translate(4%,-2%); opacity: .08 }
-    58% { transform: translate(-1%,-4%); opacity: .1 }
-    67% { transform: translate(2%,2%) scale(1.02); opacity: .07 }
-    75% { transform: translate(-4%,4%); opacity: .09 }
-    83% { transform: translate(3%,-3%); opacity: .1 }
-    92% { transform: translate(-2%,-1%); opacity: .08 }
-    100% { transform: translate(0,0); opacity: .09 }
+    0% { background-image: var(--grain0) }
+    14.29% { background-image: var(--grain1) }
+    28.57% { background-image: var(--grain2) }
+    42.86% { background-image: var(--grain3) }
+    57.14% { background-image: var(--grain4) }
+    71.43% { background-image: var(--grain5) }
+    85.71% { background-image: var(--grain6) }
+    100% { background-image: var(--grain0) }
   }
 
   /* navigation */
@@ -515,14 +510,17 @@
   })();
 </script>
 <script>
-  // grain texture
+  // grain texture: 7 distinct noise frames, cycled in place (no movement, no opacity change)
   (function () {
     try {
-      var c = document.createElement('canvas'); c.width = c.height = 180;
-      var x = c.getContext('2d'), d = x.createImageData(180, 180);
-      for (var i = 0; i < d.data.length; i += 4) { var v = Math.random() * 255; d.data[i] = d.data[i+1] = d.data[i+2] = v; d.data[i+3] = 255; }
-      x.putImageData(d, 0, 0);
-      document.documentElement.style.setProperty('--grain', 'url(' + c.toDataURL() + ')');
+      var root = document.documentElement;
+      for (var n = 0; n < 7; n++) {
+        var c = document.createElement('canvas'); c.width = c.height = 180;
+        var x = c.getContext('2d'), d = x.createImageData(180, 180);
+        for (var i = 0; i < d.data.length; i += 4) { var v = Math.random() * 255; d.data[i] = d.data[i+1] = d.data[i+2] = v; d.data[i+3] = 255; }
+        x.putImageData(d, 0, 0);
+        root.style.setProperty('--grain' + n, 'url(' + c.toDataURL() + ')');
+      }
     } catch (e) {}
   })();
 
