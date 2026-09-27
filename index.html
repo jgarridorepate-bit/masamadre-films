@@ -9,6 +9,9 @@
 <meta property="og:image" content="https://masamadrefilms.com/img/landing-1920.webp">
 <meta property="og:url" content="https://masamadrefilms.com">
 <link rel="canonical" href="https://masamadrefilms.com/">
+<link rel="alternate" hreflang="es" href="https://masamadrefilms.com/">
+<link rel="alternate" hreflang="en" href="https://masamadrefilms.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://masamadrefilms.com/">
 <meta name="theme-color" content="#120405">
 <style>
   :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
@@ -491,7 +494,7 @@
     var saved = null;
     try { saved = localStorage.getItem('mm-lang'); } catch (e) {}
     var hash = (location.hash || '').slice(1);
-    var start = (hash === 'en' || hash === 'es') ? hash : saved || ((navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+    var start = window.__FORCE_LANG || ((hash === 'en' || hash === 'es') ? hash : saved || ((navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en'));
     setLang(start, false);
   })();
 </script>
