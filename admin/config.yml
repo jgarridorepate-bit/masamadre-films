@@ -9,8 +9,8 @@ backend:
     update: "Proyectos actualizados"
 
 locale: es
-site_url: https://masamadre-films.netlify.app
-display_url: https://masamadre-films.netlify.app
+site_url: https://masamadrefilms.com
+display_url: https://masamadrefilms.com
 
 media_folder: img/uploads
 public_folder: img/uploads
