@@ -32,6 +32,9 @@
     },
     {
       "genre_en": "Body-horror",
+      "logos": [
+        "img/uploads/idoy_agten_logos.png"
+      ],
       "genre_es": "Terror, Body-horror",
       "stage_en": "Development and financing",
       "short_en": "The sourdough needs the perfect vessel. It is you.",
