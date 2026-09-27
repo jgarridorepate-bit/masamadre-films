@@ -209,7 +209,8 @@
   @supports (font-size: 1cqi) { .pv-title { font-size: clamp(28px, 9.5cqi, 80px); } }
   .pv-logline { margin: 22px 0 0; font-family: var(--display); font-size: clamp(20px, 2vw, 26px); line-height: 1.35; color: var(--bone); max-width: 32ch; }
   .pv-h { margin: 40px 0 12px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; color: var(--mute); }
-  .pv-syn { display: grid; gap: 1em; max-width: 58ch; }
+  .pv-syn { display: grid; gap: 1em; max-width: 58ch; margin-top: 32px; }
+  .pv-syn:empty { display: none; }
   .pv-syn p { margin: 0; }
   .pv-credits { margin: 36px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 28px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 22px; max-width: 58ch; }
   .pv-credits dt { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
@@ -389,7 +390,6 @@
         <h1 class="pv-title" id="pv-title"></h1>
         <p class="pv-logline" id="pv-logline"></p>
         <dl class="pv-facts" id="pv-facts"></dl>
-        <h2 class="pv-h" data-i18n="synopsis">Sinopsis</h2>
         <div class="pv-syn" id="pv-syn"></div>
         <dl class="pv-credits" id="pv-credits"></dl>
         <p class="pv-trailer" id="pv-trailer" hidden></p>
