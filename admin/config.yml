@@ -75,3 +75,36 @@ collections:
                   hint: "Separados por comas." }
               - { name: trailer, label: "Enlace al tráiler", widget: string, required: false,
                   hint: "Enlace de Vimeo o YouTube. Si está vacío no aparece el botón." }
+
+  - name: textos
+    label: Textos de la web
+    editor:
+      preview: false
+    files:
+      - name: about
+        label: About
+        file: content/about.json
+        format: json
+        fields:
+          - { name: title_es, label: "Título (ES)", widget: string }
+          - { name: title_en, label: "Título (EN)", widget: string, required: false }
+          - { name: body_es, label: "Texto (ES)", widget: text,
+              hint: "Deja una línea en blanco entre párrafos. Pon **dos asteriscos** alrededor de una palabra para que salga en negrita." }
+          - { name: body_en, label: "Texto (EN)", widget: text, required: false,
+              hint: "Si lo dejas vacío, la versión inglesa muestra el texto en español." }
+      - name: contact
+        label: Contacto
+        file: content/contact.json
+        format: json
+        fields:
+          - { name: title_es, label: "Título (ES)", widget: string }
+          - { name: title_en, label: "Título (EN)", widget: string, required: false }
+          - { name: eyebrow_es, label: "Rótulo pequeño (ES)", widget: string, required: false, hint: "La palabra corta sobre el texto, p. ej. Hablemos. Vacío para quitarla." }
+          - { name: eyebrow_en, label: "Rótulo pequeño (EN)", widget: string, required: false }
+          - { name: lede_es, label: "Texto (ES)", widget: text }
+          - { name: lede_en, label: "Texto (EN)", widget: text, required: false }
+          - { name: email, label: "Email", widget: string }
+          - { name: phone, label: "Teléfono", widget: string, required: false, hint: "Vacío para no mostrar teléfono." }
+          - { name: city_es, label: "Ciudad (ES)", widget: string, required: false }
+          - { name: city_en, label: "Ciudad (EN)", widget: string, required: false }
+          - { name: instagram, label: "Enlace de Instagram", widget: string, required: false, hint: "Vacío para ocultar el icono." }
