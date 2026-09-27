@@ -1,0 +1,11 @@
+{
+  "name": "Masamadre Films",
+  "short_name": "Masamadre",
+  "icons": [
+    { "src": "/img/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/img/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#120405",
+  "background_color": "#120405",
+  "display": "standalone"
+}
