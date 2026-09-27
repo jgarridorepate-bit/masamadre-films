@@ -215,6 +215,7 @@
   .pv-credits { margin: 36px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 28px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 22px; max-width: 58ch; }
   .pv-credits dt { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
   .pv-credits dd { margin: 0; }
+  .pv-credits:empty { display: none; }
   .pv-facts { margin: 30px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); max-width: 58ch; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .pv-facts:empty { display: none; }
   .pv-facts div { padding: 16px 20px 16px 0; }
@@ -642,7 +643,7 @@
     if (!p.people.length) { if (p.credits.direction) facts.push([t('c.direction'), p.credits.direction]); if (p.credits.script) facts.push([t('c.script'), p.credits.script]); }
     facts.push([t('c.genre'), L(p.genre)], [t('c.status'), L(p.stage)]);
     document.getElementById('pv-facts').innerHTML = facts.filter(function (r) { return r[0] && r[1]; }).map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('');
-    var rows = [['c.production', p.credits.production], ['c.duration', p.credits.duration], ['c.festivals', p.credits.festivals]];
+    var rows = [['c.duration', p.credits.duration], ['c.festivals', p.credits.festivals]];
     document.getElementById('pv-credits').innerHTML = rows.filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + t(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('');
     var tr = document.getElementById('pv-trailer');
     tr.hidden = !p.trailer; tr.innerHTML = p.trailer ? '<a href="' + esc(p.trailer) + '" target="_blank" rel="noopener">' + t('trailer') + '</a>' : '';
