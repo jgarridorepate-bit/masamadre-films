@@ -127,6 +127,8 @@
 
   /* hero */
   #inicio { align-items: center; justify-content: center; text-align: center; }
+  /* landing always fills the window exactly (svh = visible height on phones, ignoring browser bars) */
+  #inicio { min-height: 100vh; min-height: 100svh; max-height: none; }
   #inicio .shade { background: radial-gradient(ellipse at center, rgba(18,4,5,0) 0%, rgba(18,4,5,.3) 65%, rgba(18,4,5,.8) 100%); }
   .hero-mark { margin: auto 0; padding-block: 40px; }
   #inicio h1 { font-size: clamp(52px, 11vw, 150px); letter-spacing: .07em; color: var(--rose); }
@@ -268,7 +270,7 @@
     .nav a, .lang { letter-spacing: .1em; }
     .lang { gap: 4px; }
     .panel { min-height: auto; padding-top: 56px; }
-    #inicio { min-height: 78vh; }
+    #inicio { min-height: 100vh; min-height: 100svh; }
     #about .shade, #contacto .shade { background: linear-gradient(to bottom, rgba(18,4,5,.6), rgba(18,4,5,.92) 55%); }
   }
   @media (pointer: coarse) {
@@ -306,7 +308,7 @@
 </nav>
 
 <main>
-  <section class="panel" id="inicio" style="margin-top:-72px;padding-top:120px">
+  <section class="panel" id="inicio" style="margin-top:calc(-1 * var(--nav-h, 72px));padding-top:120px">
     <div class="bg" style="--img:url('img/landing-1920.webp');--img-sm:url('img/landing-960.webp')"></div>
     <div class="shade"></div>
     <div class="hero-mark">
@@ -389,6 +391,14 @@
 </article>
 
 <script>
+
+  // measure the menu bar so the landing section starts exactly at the top of the window
+  (function () {
+    var nav = document.querySelector('.nav');
+    function setNavH() { document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px'); }
+    setNavH();
+    if ('ResizeObserver' in window) new ResizeObserver(setNavH).observe(nav); else window.addEventListener('resize', setNavH);
+  })();
   // ES / EN language switch
   var I18N = {
     es: {
