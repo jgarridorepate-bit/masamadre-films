@@ -209,11 +209,18 @@
   @supports (font-size: 1cqi) { .pv-title { font-size: clamp(28px, 9.5cqi, 80px); } }
   .pv-logline { margin: 22px 0 0; font-family: var(--display); font-size: clamp(20px, 2vw, 26px); line-height: 1.35; color: var(--bone); max-width: 32ch; }
   .pv-h { margin: 40px 0 12px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; color: var(--mute); }
-  .pv-syn { display: grid; gap: 1em; max-width: 58ch; }
+  .pv-syn { display: grid; gap: 1em; max-width: 58ch; margin-top: 32px; }
+  .pv-syn:empty { display: none; }
   .pv-syn p { margin: 0; }
   .pv-credits { margin: 36px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 28px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 22px; max-width: 58ch; }
   .pv-credits dt { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
   .pv-credits dd { margin: 0; }
+  .pv-credits:empty { display: none; }
+  .pv-facts { margin: 30px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); max-width: 58ch; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pv-facts:empty { display: none; }
+  .pv-facts div { padding: 16px 20px 16px 0; }
+  .pv-facts dt { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); margin-bottom: 6px; }
+  .pv-facts dd { margin: 0; font-size: 15px; color: var(--bone); }
   .pv-trailer a { display: inline-block; margin-top: 28px; border: 1px solid var(--bone); padding: 12px 22px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; }
   .pv-trailer a:hover { background: var(--bone); color: var(--ink); }
   .pv-nav { margin-top: clamp(48px, 7vw, 96px); padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; }
@@ -383,7 +390,7 @@
         <p class="pv-meta" id="pv-meta"></p>
         <h1 class="pv-title" id="pv-title"></h1>
         <p class="pv-logline" id="pv-logline"></p>
-        <h2 class="pv-h" data-i18n="synopsis">Sinopsis</h2>
+        <dl class="pv-facts" id="pv-facts"></dl>
         <div class="pv-syn" id="pv-syn"></div>
         <dl class="pv-credits" id="pv-credits"></dl>
         <p class="pv-trailer" id="pv-trailer" hidden></p>
@@ -430,7 +437,7 @@
       'doc.title': 'Masamadre Films', 'nav.label': 'Principal',
       'page.prev': 'Proyectos anteriores', 'page.next': 'Más proyectos', 'more.projects': 'Más proyectos',
       'back': 'Volver a proyectos', 'synopsis': 'Sinopsis', 'prev.project': 'Anterior', 'next.project': 'Siguiente',
-      'c.production': 'Producción', 'c.direction': 'Dirección', 'c.script': 'Guion', 'c.duration': 'Duración', 'c.festivals': 'Festivales', 'c.status': 'Estado', 'trailer': 'Ver tráiler', 'load.error': 'No se han podido cargar los proyectos. Recarga la página.', 'load.empty': 'Pronto habrá proyectos aquí.'
+      'c.production': 'Producción', 'c.direction': 'Dirección', 'c.script': 'Guion', 'c.duration': 'Duración', 'c.festivals': 'Festivales', 'c.status': 'Estado', 'c.genre': 'Género', 'trailer': 'Ver tráiler', 'load.error': 'No se han podido cargar los proyectos. Recarga la página.', 'load.empty': 'Pronto habrá proyectos aquí.'
     },
     en: {
       'nav.projects': 'Projects', 'nav.about': 'About', 'nav.contact': 'Contact',
@@ -458,7 +465,7 @@
       'doc.title': 'Masamadre Films', 'nav.label': 'Main',
       'page.prev': 'Previous projects', 'page.next': 'More projects', 'more.projects': 'More projects',
       'back': 'Back to projects', 'synopsis': 'Synopsis', 'prev.project': 'Previous', 'next.project': 'Next',
-      'c.production': 'Production', 'c.direction': 'Director', 'c.script': 'Screenplay', 'c.duration': 'Running time', 'c.festivals': 'Festivals', 'c.status': 'Status', 'trailer': 'Watch trailer', 'load.error': 'The projects could not be loaded. Please reload the page.', 'load.empty': 'Projects coming soon.'
+      'c.production': 'Production', 'c.direction': 'Director', 'c.script': 'Screenplay', 'c.duration': 'Running time', 'c.festivals': 'Festivals', 'c.status': 'Status', 'c.genre': 'Genre', 'trailer': 'Watch trailer', 'load.error': 'The projects could not be loaded. Please reload the page.', 'load.empty': 'Projects coming soon.'
     }
   };
   var LANG = 'es';
@@ -507,6 +514,15 @@
     series: { es: 'Serie', en: 'Series' }, documentary: { es: 'Documental', en: 'Documentary' },
     commercial: { es: 'Publicidad', en: 'Commercial' }, videoclip: { es: 'Videoclip', en: 'Music video' }
   };
+  var ROLES = {
+    'directora': { es: 'Directora', en: 'Director' }, 'director': { es: 'Director', en: 'Director' },
+    'directoras': { es: 'Directoras', en: 'Directors' }, 'directores': { es: 'Directores', en: 'Directors' },
+    'guionista': { es: 'Guionista', en: 'Screenwriter' }, 'guionistas': { es: 'Guionistas', en: 'Screenwriters' },
+    'directora-guionista': { es: 'Directora y guionista', en: 'Writer-director' }, 'director-guionista': { es: 'Director y guionista', en: 'Writer-director' },
+    'productora': { es: 'Productora', en: 'Producer' }, 'productor': { es: 'Productor', en: 'Producer' },
+    'productoras': { es: 'Productoras', en: 'Producers' }, 'productores': { es: 'Productores', en: 'Producers' },
+    'dop-f': { es: 'Directora de fotografía', en: 'Cinematographer' }, 'dop-m': { es: 'Director de fotografía', en: 'Cinematographer' }
+  };
   var PROJECTS = [];
   function slugify(s) {
     return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -526,13 +542,22 @@
         short: { es: r.short_es || '', en: r.short_en || r.short_es || '' },
         synopsis: { es: syEs, en: syEn.length ? syEn : syEs },
         credits: { production: 'Masamadre Films', direction: r.direction || '', script: r.script || '', duration: r.duration || '', festivals: r.festivals || '' },
+        people: (r.credits || []).filter(function (c) { return c && c.name; }).map(function (c) { return { role: (c.role && c.role !== 'otro' && ROLES[c.role]) || { es: c.role_es || '', en: c.role_en || c.role_es || '' }, name: c.name }; }),
+        genre: { es: r.genre_es || '', en: r.genre_en || r.genre_es || '' },
+        stage: { es: r.stage_es || '', en: r.stage_en || r.stage_es || '' },
         trailer: r.trailer || ''
       };
     });
   }
+  // Uploaded stills can be huge: on the live site, ask Netlify's image service for a resized WebP copy.
+  var ON_NETLIFY = /(^|\.)masamadrefilms\.com$|\.netlify\.app$/.test(location.hostname);
+  function imgSrc(src, w) {
+    if (!src || !ON_NETLIFY || /^(https?:|data:)/.test(src)) return src;
+    return '/.netlify/images?url=' + encodeURIComponent('/' + src.replace(/^\/+/, '')) + '&w=' + w + '&fm=webp&q=78';
+  }
   function L(o) { return (o && (o[LANG] || o.es)) || ''; }
   function metaYear(p) { return p.inDev ? t('type.indev') : p.year; }
-  function metaLine(p) { var y = metaYear(p); return L(p.type) + (y ? ' \u00b7 ' + y : ''); }
+  function metaLine(p) { var y = (p.inDev && L(p.stage)) ? p.year : metaYear(p); return L(p.type) + (y ? ' \u00b7 ' + y : ''); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   // ---------- About and Contact texts (edited from /admin) ----------
@@ -580,7 +605,7 @@
     if (!PROJECTS.length) { track.innerHTML = loadState === 'loading' ? '' : '<p class="track-msg">' + t(loadState === 'error' ? 'load.error' : 'load.empty') + '</p>'; prevBtn.disabled = nextBtn.disabled = true; return; }
     track.innerHTML = PROJECTS.map(function (p) {
       return '<a class="card" href="#p-' + p.slug + '" id="card-' + p.slug + '">' +
-        '<div class="thumb"><img src="' + p.img + '" width="360" height="240" loading="lazy" decoding="async" alt="' + esc(L(p.alt)) + '"></div>' +
+        '<div class="thumb"><img src="' + imgSrc(p.img, 720) + '" width="360" height="240" loading="lazy" decoding="async" alt="' + esc(L(p.alt)) + '"></div>' +
         '<h3>' + esc(p.title) + '</h3>' +
         '<div class="meta"><span>' + esc(L(p.type)) + '</span><span>' + esc(metaYear(p)) + '</span></div>' +
         '<p>' + esc(L(p.short)) + '</p></a>';
@@ -608,13 +633,17 @@
   var view = document.getElementById('project-view'), current = null;
   function renderView(p) {
     var i = PROJECTS.indexOf(p);
-    document.getElementById('pv-bg').style.backgroundImage = 'url(' + p.img + ')';
-    var img = document.getElementById('pv-img'); img.src = p.img; img.alt = L(p.alt);
-    document.getElementById('pv-meta').textContent = L(p.type) + ' · ' + metaYear(p);
+    document.getElementById('pv-bg').style.backgroundImage = 'url("' + imgSrc(p.img, 600) + '")';
+    var img = document.getElementById('pv-img'); img.src = imgSrc(p.img, 1600); img.alt = L(p.alt);
+    document.getElementById('pv-meta').textContent = metaLine(p);
     document.getElementById('pv-title').textContent = p.title;
     document.getElementById('pv-logline').textContent = L(p.short);
     document.getElementById('pv-syn').innerHTML = L(p.synopsis).map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('');
-    var rows = [['c.direction', p.credits.direction], ['c.script', p.credits.script], ['c.production', p.credits.production], ['c.duration', p.credits.duration], ['c.festivals', p.credits.festivals]];
+    var facts = p.people.map(function (c) { return [L(c.role), c.name]; });
+    if (!p.people.length) { if (p.credits.direction) facts.push([t('c.direction'), p.credits.direction]); if (p.credits.script) facts.push([t('c.script'), p.credits.script]); }
+    facts.push([t('c.genre'), L(p.genre)], [t('c.status'), L(p.stage)]);
+    document.getElementById('pv-facts').innerHTML = facts.filter(function (r) { return r[0] && r[1]; }).map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd></div>'; }).join('');
+    var rows = [['c.duration', p.credits.duration], ['c.festivals', p.credits.festivals]];
     document.getElementById('pv-credits').innerHTML = rows.filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + t(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('');
     var tr = document.getElementById('pv-trailer');
     tr.hidden = !p.trailer; tr.innerHTML = p.trailer ? '<a href="' + esc(p.trailer) + '" target="_blank" rel="noopener">' + t('trailer') + '</a>' : '';
