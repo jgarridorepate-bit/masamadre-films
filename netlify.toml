@@ -1,0 +1,14 @@
+[build]
+  publish = "."
+
+# Always fetch the latest project list after an edit
+[[headers]]
+  for = "/content/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Cache images for a day
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

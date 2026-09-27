@@ -1,0 +1,77 @@
+# Masamadre Films - editor de proyectos (Decap CMS)
+# Editor settings. Repository: jgarridorepate-bit/masamadre-films
+
+backend:
+  name: github
+  repo: jgarridorepate-bit/masamadre-films
+  branch: main
+  commit_messages:
+    update: "Proyectos actualizados"
+
+locale: es
+site_url: https://masamadre-films.netlify.app
+display_url: https://masamadre-films.netlify.app
+
+media_folder: img/uploads
+public_folder: img/uploads
+
+collections:
+  - name: contenido
+    label: Proyectos
+    editor:
+      preview: false
+    files:
+      - name: proyectos
+        label: Lista de proyectos
+        file: content/projects.json
+        format: json
+        fields:
+          - name: projects
+            label: Proyectos
+            label_singular: proyecto
+            widget: list
+            summary: "{{fields.title}}"
+            hint: "Arrastra los proyectos para cambiar el orden en la web. El primero es el que se ve primero."
+            fields:
+              - { name: published, label: "Visible en la web", widget: boolean, default: true,
+                  hint: "Desactívalo para esconder el proyecto sin borrarlo." }
+              - { name: title, label: "Título", widget: string }
+              - { name: slug, label: "Dirección de la página", widget: string, required: false,
+                  hint: "Solo minúsculas y guiones, p. ej. la-fermentacion. Si lo dejas vacío se crea a partir del título. No lo cambies después de compartir el enlace." }
+              - name: type
+                label: "Tipo"
+                widget: select
+                default: short
+                options:
+                  - { label: "Cortometraje", value: short }
+                  - { label: "Largometraje", value: feature }
+                  - { label: "Serie", value: series }
+                  - { label: "Documental", value: documentary }
+                  - { label: "Publicidad", value: commercial }
+                  - { label: "Videoclip", value: videoclip }
+              - { name: year, label: "Año", widget: string, required: false }
+              - name: status
+                label: "Estado"
+                widget: select
+                default: released
+                options:
+                  - { label: "Terminado", value: released }
+                  - { label: "En desarrollo", value: development }
+              - { name: image, label: "Imagen (fotograma)", widget: image, choose_url: false,
+                  hint: "Horizontal, al menos 1600 px de ancho. JPG o WebP." }
+              - { name: alt_es, label: "Descripción de la imagen (ES)", widget: string, required: false,
+                  hint: "Para personas con lector de pantalla. Una frase corta." }
+              - { name: alt_en, label: "Descripción de la imagen (EN)", widget: string, required: false }
+              - { name: short_es, label: "Texto corto (ES)", widget: text,
+                  hint: "Una frase. Aparece debajo de la imagen en la lista." }
+              - { name: short_en, label: "Texto corto (EN)", widget: text, required: false }
+              - { name: synopsis_es, label: "Sinopsis (ES)", widget: text, required: false,
+                  hint: "Deja una línea en blanco entre párrafos." }
+              - { name: synopsis_en, label: "Sinopsis (EN)", widget: text, required: false }
+              - { name: direction, label: "Dirección", widget: string, required: false }
+              - { name: script, label: "Guion", widget: string, required: false }
+              - { name: duration, label: "Duración", widget: string, required: false, hint: "p. ej. 18 min" }
+              - { name: festivals, label: "Festivales", widget: string, required: false,
+                  hint: "Separados por comas." }
+              - { name: trailer, label: "Enlace al tráiler", widget: string, required: false,
+                  hint: "Enlace de Vimeo o YouTube. Si está vacío no aparece el botón." }

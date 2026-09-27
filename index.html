@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Masamadre Films, productora audiovisual de género en Madrid.">
+<meta property="og:title" content="Masamadre Films">
+<meta property="og:description" content="Productora audiovisual de género. Madrid.">
+<meta property="og:image" content="img/landing-1920.webp">
+<meta name="theme-color" content="#120405">
+<style>
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Masamadre Films</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400;500&display=swap">
+<link rel="preload" as="image" href="img/landing-1920.webp" imagesrcset="img/landing-960.webp 960w, img/landing-1920.webp 1675w" imagesizes="100vw" fetchpriority="high">
+<style>
+  :root {
+    color-scheme: dark;
+    --ink: #120405;
+    --blood: #3a0a0d;
+    --flesh: #8e1a1f;
+    --bone: #efdcd6;
+    --rose: #E6A6D8;
+    --mute: #b89a95;
+    --line: rgba(239, 220, 214, .28);
+    --display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+    --sans: "Jost", "Futura", "Century Gothic", "Helvetica Neue", Arial, sans-serif;
+    --gutter: max(clamp(16px, 4vw, 56px), calc((100vw - 1760px) / 2));
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: #E6A6D8; color: var(--ink); }
+  :focus-visible { outline: 1px solid var(--rose); outline-offset: 4px; }
+
+  /* film grain, fixed over everything */
+  .grain {
+    position: fixed; inset: -50%; z-index: 50; pointer-events: none;
+    opacity: .09; background-image: var(--grain); background-size: 180px;
+    animation: grain 1.2s steps(6) infinite;
+  }
+  @keyframes grain {
+    0% { transform: translate(0,0) } 20% { transform: translate(-3%,2%) }
+    40% { transform: translate(2%,-4%) } 60% { transform: translate(-4%,-1%) }
+    80% { transform: translate(3%,3%) } 100% { transform: translate(0,0) }
+  }
+
+  /* navigation */
+  .nav {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+    padding: 22px var(--gutter) 14px;
+    background: linear-gradient(to bottom, rgba(18,4,5,.85), rgba(18,4,5,0));
+  }
+  .nav ul {
+    list-style: none; margin: 0; padding: 0 0 10px; display: flex; gap: clamp(20px, 4vw, 52px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav a {
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 400;
+    padding-bottom: 11px; border-bottom: 1px solid transparent; transition: border-color .3s, color .3s;
+  }
+  .nav a:hover, .nav a.on { border-color: var(--bone); }
+  .nav-side { display: flex; align-items: flex-start; gap: clamp(18px, 3vw, 40px); }
+  .lang { display: flex; align-items: center; gap: 6px; font-size: 11px; letter-spacing: .16em; color: var(--mute); padding-top: 1px; }
+  .lang button {
+    all: unset; cursor: pointer; font-weight: 400; color: var(--mute);
+    padding-bottom: 4px; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s;
+  }
+  .lang button:hover { color: var(--bone); }
+  .lang button[aria-pressed="true"] { color: var(--bone); border-bottom-color: var(--rose); }
+  .lang button:focus-visible { outline: 1px solid var(--rose); outline-offset: 4px; }
+  .tag {
+    font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500;
+    text-align: right; line-height: 1.5; color: var(--bone);
+  }
+
+  /* shared panel */
+  .panel {
+    position: relative; overflow: hidden;
+    padding: clamp(48px, 8vw, 110px) var(--gutter) 40px;
+    min-height: min(90vh, 820px);
+    display: flex; flex-direction: column;
+  }
+  .panel + .panel { border-top: 1px solid rgba(239,220,214,.08); }
+  .bg {
+    position: absolute; inset: 0; z-index: -2;
+    background-size: cover; background-position: center;
+    animation: breathe 22s ease-in-out infinite alternate;
+  }
+  .bg, .eye-img { background-image: var(--img); }
+  @media (max-width: 760px) { .bg, .eye-img { background-image: var(--img-sm); } }
+  .shade { position: absolute; inset: 0; z-index: -1; }
+  @keyframes breathe { from { transform: scale(1.02) } to { transform: scale(1.1) } }
+
+  .foot {
+    margin-top: auto; padding-top: 48px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-size: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 400; line-height: 1.5;
+  }
+  .count { font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--line); padding-bottom: 6px; word-spacing: .6em; }
+
+  h1, h2 {
+    font-family: var(--display); font-weight: 300; margin: 0;
+    text-transform: uppercase; letter-spacing: .08em; line-height: .95; color: var(--rose);
+    text-wrap: balance;
+  }
+  h2 { font-size: clamp(48px, 8.5vw, 112px); }
+
+  /* hero */
+  #inicio { align-items: center; justify-content: center; text-align: center; }
+  #inicio .shade { background: radial-gradient(ellipse at center, rgba(18,4,5,0) 0%, rgba(18,4,5,.3) 65%, rgba(18,4,5,.8) 100%); }
+  .hero-mark { margin: auto 0; padding-block: 40px; }
+  #inicio h1 { font-size: clamp(52px, 11vw, 150px); letter-spacing: .07em; color: var(--rose); }
+  #inicio h1, #inicio .films { text-shadow: 0 4px 40px rgba(18,4,5,.7), 0 0 90px rgba(18,4,5,.55); }
+  .films {
+    display: block; font-family: var(--display); font-weight: 300;
+    font-size: clamp(20px, 3vw, 38px); letter-spacing: .55em; margin: 10px 0 0 .55em; color: var(--rose); text-transform: uppercase;
+  }
+  .btn {
+    display: inline-block; margin-top: clamp(36px, 6vw, 64px);
+    border: 1px solid var(--bone); padding: 12px 24px;
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500;
+    background: rgba(18,4,5,.2); transition: background .35s, color .35s;
+  }
+  .btn:hover { background: var(--bone); color: var(--ink); }
+  #inicio .foot { width: 100%; text-align: left; }
+
+  /* projects */
+  #proyectos .shade { background: linear-gradient(100deg, rgba(18,4,5,.9) 0%, rgba(18,4,5,.62) 50%, rgba(18,4,5,.3) 100%); }
+  .proj-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; }
+
+  .proj-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .pager { display: flex; gap: 10px; }
+  .arrow {
+    all: unset; box-sizing: border-box; cursor: pointer; width: 44px; height: 44px; display: grid; place-items: center;
+    border: 1px solid var(--line); color: var(--bone); font-size: 18px; transition: background .3s, color .3s, border-color .3s, opacity .3s;
+  }
+  .arrow:hover:not(:disabled) { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+  .arrow:active:not(:disabled) { transform: scale(.96); }
+  .arrow:disabled { opacity: .3; cursor: default; }
+  .arrow:focus-visible { outline: 1px solid var(--rose); outline-offset: 4px; }
+
+  .track {
+    --per: 4; --gap: 18px;
+    margin-top: clamp(32px, 5vw, 64px);
+    display: grid; grid-auto-flow: column; gap: var(--gap);
+    grid-auto-columns: calc((100% - (var(--per) - 1) * var(--gap)) / var(--per));
+    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    scrollbar-width: none; padding-bottom: 4px;
+  }
+  .track::-webkit-scrollbar { display: none; }
+  .track:focus-visible { outline: 1px solid var(--rose); outline-offset: 6px; }
+  .track-msg { margin: 0; grid-column: 1 / -1; color: var(--mute); font-size: 14px; }
+  .card { scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; color: inherit; }
+  .card:focus-visible { outline: 1px solid var(--rose); outline-offset: 6px; }
+  .thumb { aspect-ratio: 3 / 2; max-width: 100%; overflow: hidden; border: 1px solid rgba(239,220,214,.14); background: var(--blood); }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(.9); transition: transform 1.2s cubic-bezier(.2,.7,.2,1), filter .6s; }
+  .card:hover .thumb img { transform: scale(1.06); filter: saturate(1.1) brightness(1.08); }
+  .card h3 { margin: 0; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 500; transition: color .3s; }
+  .card:hover h3 { color: var(--rose); }
+  .meta {
+    display: flex; justify-content: space-between; gap: 8px;
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--mute);
+    border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-top: -8px; font-variant-numeric: tabular-nums;
+  }
+  .card p { margin: 0; font-size: 13px; color: var(--mute); line-height: 1.55; }
+  @media (max-width: 1000px) { .track { --per: 2; } }
+  @media (max-width: 640px) { .track { --per: 1.15; --gap: 14px; } .pager { display: none; } }
+
+  /* project page */
+  body.pv-open main { display: none; }
+  .pview { position: relative; min-height: min(100vh, 1000px); overflow: hidden; padding: 110px var(--gutter) 64px; margin-top: -72px; animation: pvIn .6s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes pvIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .pv-bg { position: absolute; inset: -40px; z-index: -2; background-size: cover; background-position: center; filter: blur(38px) saturate(1.1); opacity: .45; }
+  .pview::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(18,4,5,.55), rgba(18,4,5,.92) 60%, var(--ink)); }
+  .pv-back { display: inline-flex; gap: 10px; align-items: center; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 400; padding: 10px 0; border-bottom: 1px solid var(--line); transition: color .3s, border-color .3s; }
+  .pv-back:hover { color: var(--rose); border-color: var(--rose); }
+  .pv-back:focus-visible { outline: 1px solid var(--rose); outline-offset: 4px; }
+  .pv-grid { margin-top: clamp(32px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .pv-still { margin: 0; aspect-ratio: 3 / 2; max-width: 100%; overflow: hidden; border: 1px solid rgba(239,220,214,.14); background: var(--blood); }
+  .pv-still img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pv-meta { margin: 0 0 14px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+  .pv-text { min-width: 0; container-type: inline-size; }
+  .pv-title { margin: 0; font-family: var(--display); font-weight: 300; text-transform: uppercase; letter-spacing: .04em; line-height: 1.02; color: var(--rose); font-size: clamp(30px, 4.4vw, 72px); text-wrap: balance; max-width: 100%; }
+  @supports (font-size: 1cqi) { .pv-title { font-size: clamp(28px, 9.5cqi, 80px); } }
+  .pv-logline { margin: 22px 0 0; font-family: var(--display); font-size: clamp(20px, 2vw, 26px); line-height: 1.35; color: var(--bone); max-width: 32ch; }
+  .pv-h { margin: 40px 0 12px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; color: var(--mute); }
+  .pv-syn { display: grid; gap: 1em; max-width: 58ch; }
+  .pv-syn p { margin: 0; }
+  .pv-credits { margin: 36px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 28px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 22px; max-width: 58ch; }
+  .pv-credits dt { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
+  .pv-credits dd { margin: 0; }
+  .pv-trailer a { display: inline-block; margin-top: 28px; border: 1px solid var(--bone); padding: 12px 22px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; }
+  .pv-trailer a:hover { background: var(--bone); color: var(--ink); }
+  .pv-nav { margin-top: clamp(48px, 7vw, 96px); padding-top: 22px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; }
+  .pv-nav a { display: grid; gap: 6px; max-width: 45%; }
+  .pv-nav a:last-child { text-align: right; margin-left: auto; }
+  .pv-nav small { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+  .pv-nav span { font-family: var(--display); font-size: clamp(20px, 2.4vw, 30px); text-transform: uppercase; letter-spacing: .06em; color: var(--bone); transition: color .3s; }
+  .pv-nav a:hover span { color: var(--rose); }
+  @media (max-width: 800px) { .pv-grid { grid-template-columns: 1fr; } .pview { padding-top: 96px; } }
+
+  /* about */
+  .eye-img { position: absolute; inset: 0; background-size: cover; background-position: 72% 30%; }
+  .eye-closed { opacity: 0; transition: opacity 70ms ease-in; }
+  .eyes.blink .eye-closed { opacity: 1; }
+  #about .shade { background: linear-gradient(90deg, rgba(18,4,5,.97) 0%, rgba(18,4,5,.88) 32%, rgba(18,4,5,.1) 62%, rgba(18,4,5,.15) 100%); }
+  .about-body { margin-top: clamp(32px, 5vw, 56px); max-width: 36ch; display: grid; gap: 1.2em; font-size: 15px; }
+  .about-body p { margin: 0; }
+  .about-body strong { font-weight: 500; letter-spacing: .06em; }
+
+  /* contact */
+  #contacto .bg { background-position: 80% 50%; }
+  #contacto .shade { background: linear-gradient(90deg, rgba(18,4,5,.97) 0%, rgba(18,4,5,.8) 38%, rgba(18,4,5,.05) 75%); }
+  .eyebrow {
+    display: inline-block; margin-top: clamp(28px, 4vw, 44px);
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500;
+    border-bottom: 1px solid var(--line); padding-bottom: 8px;
+  }
+  .lede { max-width: 34ch; margin: 22px 0 28px; }
+  .details { display: grid; gap: 4px; font-size: 15px; }
+  .copyrow { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .copy {
+    all: unset; cursor: pointer; font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--mute); border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color .25s;
+  }
+  .copy:hover { color: var(--bone); }
+  .copy:focus-visible { outline: 1px solid var(--rose); outline-offset: 4px; }
+  .social { display: flex; gap: 22px; margin-top: 32px; }
+  .social a { width: 26px; height: 26px; display: grid; place-items: center; opacity: .85; transition: opacity .25s, transform .25s; }
+  .social a:hover { opacity: 1; transform: translateY(-2px); }
+  .social svg { width: 22px; height: 22px; fill: none; stroke: var(--bone); stroke-width: 1.3; }
+  .social svg .fill { fill: var(--bone); stroke: none; }
+
+  /* load sequence */
+  .rise { animation: rise 1.6s cubic-bezier(.2,.7,.2,1) both; }
+  .rise.d2 { animation-delay: .25s } .rise.d3 { animation-delay: .5s }
+  @keyframes rise { from { opacity: .0; transform: translateY(14px); filter: blur(6px) } to { opacity: 1; transform: none; filter: none } }
+
+  @media (max-width: 360px) { .nav ul { gap: 12px; } .nav a, .lang { font-size: 10px; } }
+  @media (max-width: 640px) {
+    #inicio h1 { font-size: 10vw; letter-spacing: .04em; }
+    #about .bg .eye-img { background-position: 78% 30%; }
+    #about .shade { background: linear-gradient(to bottom, rgba(18,4,5,.25) 0%, rgba(18,4,5,.7) 45%, rgba(18,4,5,.92) 70%) !important; }
+    #about { padding-top: 38vh; }
+    .tag { display: none; }
+    .nav ul { gap: 18px; }
+    .nav { gap: 10px; }
+    .nav a, .lang { letter-spacing: .1em; }
+    .lang { gap: 4px; }
+    .panel { min-height: auto; padding-top: 56px; }
+    #inicio { min-height: 78vh; }
+    #about .shade, #contacto .shade { background: linear-gradient(to bottom, rgba(18,4,5,.6), rgba(18,4,5,.92) 55%); }
+  }
+  @media (pointer: coarse) {
+    .lang button { padding: 10px 4px 6px; }
+    .arrow { width: 48px; height: 48px; }
+    .copy { padding: 10px 4px 6px; }
+    .social a { width: 44px; height: 44px; }
+    .social { gap: 8px; margin-left: -10px; }
+  }
+  @media (max-width: 640px) {
+    .grain { animation: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bg, .grain, .rise, .pview { animation: none !important; }
+    .track { scroll-behavior: auto; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Principal">
+  <ul>
+    <li><a href="#proyectos" data-i18n="nav.projects">Proyectos</a></li>
+    <li><a href="#about" data-i18n="nav.about">About</a></li>
+    <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
+  </ul>
+  <div class="nav-side">
+    <div class="lang" role="group" aria-label="Idioma / Language">
+      <button type="button" id="lang-es" data-lang="es" aria-pressed="true" lang="es">ES</button><span aria-hidden="true">/</span><button type="button" id="lang-en" data-lang="en" aria-pressed="false" lang="en">EN</button>
+    </div>
+    <div class="tag" data-i18n-html="tag">Productora<br>audiovisual<br>de género</div>
+  </div>
+</nav>
+
+<main>
+  <section class="panel" id="inicio" style="margin-top:-72px;padding-top:120px">
+    <div class="bg" style="--img:url('img/landing-1920.webp');--img-sm:url('img/landing-960.webp')"></div>
+    <div class="shade"></div>
+    <div class="hero-mark">
+      <h1 class="rise">Masamadre</h1>
+      <span class="films rise d2">Films</span>
+      <a class="btn rise d3" href="#proyectos" data-i18n="hero.cta">Ver proyectos</a>
+    </div>
+  </section>
+
+  <section class="panel" id="proyectos">
+    <div class="bg" style="--img:url('img/proyectos-1920.webp');--img-sm:url('img/proyectos-960.webp');background-position:60% 40%"></div>
+    <div class="shade"></div>
+    <div class="proj-head">
+      <h2 data-i18n="projects.title">Proyectos</h2>
+      <div class="pager">
+        <button type="button" class="arrow" id="prev-page" data-i18n-label="page.prev" aria-label="Proyectos anteriores" disabled><span aria-hidden="true">&larr;</span></button>
+        <button type="button" class="arrow" id="next-page" data-i18n-label="page.next" aria-label="Más proyectos"><span aria-hidden="true">&rarr;</span></button>
+      </div>
+    </div>
+    <div class="track" id="track" tabindex="0" data-i18n-label="projects.title" aria-label="Proyectos"></div>
+  </section>
+
+  <section class="panel" id="about">
+    <div class="bg eyes" aria-hidden="true">
+      <div class="eye-img" style="--img:url('img/ojo-abierto-1920.webp');--img-sm:url('img/ojo-abierto-960.webp')"></div>
+      <div class="eye-img eye-closed" style="--img:url('img/ojo-cerrado-1920.webp');--img-sm:url('img/ojo-cerrado-960.webp')"></div>
+    </div>
+    <div class="shade"></div>
+    <h2 data-i18n="about.title">About</h2>
+    <div class="about-body">
+      <p data-i18n-html="about.1"><strong>MASAMADRE</strong> es una productora audiovisual que nace de lo inquietante, lo extraño y lo que habita en los márgenes.</p>
+      <p data-i18n="about.2">Desarrollamos historias que fermentan en la frontera entre lo real y lo sobrenatural, con una mirada autoral y una fuerte identidad visual.</p>
+      <p data-i18n="about.3">Creemos en el cine como un organismo vivo, en constante transformación. Como la masa madre, nuestras historias crecen, mutan y conectan.</p>
+    </div>
+  </section>
+
+  <section class="panel" id="contacto">
+    <div class="bg" style="--img:url('img/contacto-1920.webp');--img-sm:url('img/contacto-960.webp')"></div>
+    <div class="shade"></div>
+    <h2 data-i18n="contact.title">Contacto</h2>
+    <div><span class="eyebrow" data-i18n="contact.eyebrow">Hablemos</span></div>
+    <p class="lede" data-i18n="contact.lede">Estamos abiertos a nuevos proyectos, colaboraciones e ideas que fermenten.</p>
+    <div class="details">
+      <div class="copyrow">
+        <a href="mailto:info@masamadrefilms.com" id="mail">info@masamadrefilms.com</a>
+        <button type="button" class="copy" id="copy-mail" data-i18n="copy">Copiar</button>
+      </div>
+      <span>+34 670 725 446</span>
+      <span data-i18n="city">Madrid, España</span>
+    </div>
+    <div class="social">
+      <a href="https://www.instagram.com/masamadrefilms/" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle class="fill" cx="17.4" cy="6.6" r="1.1"/></svg>
+      </a>
+      <a href="mailto:info@masamadrefilms.com" aria-label="Correo" data-i18n-label="mail.label">
+        <svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg>
+      </a>
+    </div>
+  </section>
+</main>
+
+<article class="pview" id="project-view" hidden aria-labelledby="pv-title">
+  <div class="pv-bg" id="pv-bg" aria-hidden="true"></div>
+  <div class="pv-inner">
+    <a class="pv-back" id="pv-back" href="#proyectos"><span aria-hidden="true">&larr;</span> <span data-i18n="back">Volver a proyectos</span></a>
+    <div class="pv-grid">
+      <figure class="pv-still"><img id="pv-img" src="" alt=""></figure>
+      <div class="pv-text">
+        <p class="pv-meta" id="pv-meta"></p>
+        <h1 class="pv-title" id="pv-title"></h1>
+        <p class="pv-logline" id="pv-logline"></p>
+        <h2 class="pv-h" data-i18n="synopsis">Sinopsis</h2>
+        <div class="pv-syn" id="pv-syn"></div>
+        <dl class="pv-credits" id="pv-credits"></dl>
+        <p class="pv-trailer" id="pv-trailer" hidden></p>
+      </div>
+    </div>
+    <nav class="pv-nav" id="pv-nav" data-i18n-label="more.projects" aria-label="Más proyectos"></nav>
+  </div>
+</article>
+
+<script>
+  // ES / EN language switch
+  var I18N = {
+    es: {
+      'nav.projects': 'Proyectos', 'nav.about': 'About', 'nav.contact': 'Contacto',
+      'tag': 'Productora<br>audiovisual<br>de género',
+      'hero.cta': 'Ver proyectos',
+      'projects.title': 'Proyectos',
+      'f.all': 'Todos', 'f.fiction': 'Ficción', 'f.doc': 'Documental', 'f.ads': 'Publicidad', 'f.dev': 'Desarrollo',
+      'type.short': 'Cortometraje', 'type.feature': 'Largometraje', 'type.series': 'Serie', 'type.indev': 'En desarrollo',
+      'syn.1': 'Una mujer descubre que algo crece dentro de la casa familiar.',
+      'syn.2': 'Un pueblo abandonado guarda lo que nadie quiso enterrar.',
+      'syn.3': 'Retrato de un obrador centenario y de la masa que lo sobrevive.',
+      'syn.4': 'Seis episodios sobre una comunidad que empieza a mutar.',
+      'alt.1': 'Primer plano de un ojo tras un velo blanco',
+      'alt.2': 'Silueta al final de un pasillo en ruinas',
+      'alt.3': 'Textura orgánica roja de masa en fermentación',
+      'alt.4': 'Figura cubierta por un velo en penumbra',
+      'empty': 'Todavía no hay proyectos en esta categoría. Pronto fermentarán.',
+      'about.title': 'About',
+      'about.1': '<strong>MASAMADRE</strong> es una productora audiovisual que nace de lo inquietante, lo extraño y lo que habita en los márgenes.',
+      'about.2': 'Desarrollamos historias que fermentan en la frontera entre lo real y lo sobrenatural, con una mirada autoral y una fuerte identidad visual.',
+      'about.3': 'Creemos en el cine como un organismo vivo, en constante transformación. Como la masa madre, nuestras historias crecen, mutan y conectan.',
+      'contact.title': 'Contacto', 'contact.eyebrow': 'Hablemos',
+      'contact.lede': 'Estamos abiertos a nuevos proyectos, colaboraciones e ideas que fermenten.',
+      'copy': 'Copiar', 'copied': 'Copiado', 'city': 'Madrid, España', 'mail.label': 'Correo',
+      'doc.title': 'Masamadre Films', 'nav.label': 'Principal',
+      'page.prev': 'Proyectos anteriores', 'page.next': 'Más proyectos', 'more.projects': 'Más proyectos',
+      'back': 'Volver a proyectos', 'synopsis': 'Sinopsis', 'prev.project': 'Anterior', 'next.project': 'Siguiente',
+      'c.production': 'Producción', 'c.direction': 'Dirección', 'c.script': 'Guion', 'c.duration': 'Duración', 'c.festivals': 'Festivales', 'c.status': 'Estado', 'trailer': 'Ver tráiler', 'load.error': 'No se han podido cargar los proyectos. Recarga la página.', 'load.empty': 'Pronto habrá proyectos aquí.'
+    },
+    en: {
+      'nav.projects': 'Projects', 'nav.about': 'About', 'nav.contact': 'Contact',
+      'tag': 'Genre<br>film<br>production',
+      'hero.cta': 'View projects',
+      'projects.title': 'Projects',
+      'f.all': 'All', 'f.fiction': 'Fiction', 'f.doc': 'Documentary', 'f.ads': 'Commercials', 'f.dev': 'In development',
+      'type.short': 'Short film', 'type.feature': 'Feature film', 'type.series': 'Series', 'type.indev': 'In development',
+      'syn.1': 'A woman discovers that something is growing inside the family home.',
+      'syn.2': 'An abandoned village keeps what no one wanted to bury.',
+      'syn.3': 'Portrait of a century-old bakery and the dough that outlives it.',
+      'syn.4': 'Six episodes about a community that begins to mutate.',
+      'alt.1': 'Close-up of an eye behind a white veil',
+      'alt.2': 'Silhouette at the end of a ruined corridor',
+      'alt.3': 'Red organic texture of fermenting dough',
+      'alt.4': 'Veiled figure in half-light',
+      'empty': 'No projects in this category yet.',
+      'about.title': 'About',
+      'about.1': '<strong>MASAMADRE</strong> is a film and audiovisual production company born from the unsettling, the strange and what lives on the margins.',
+      'about.2': 'We develop stories that ferment on the border between the real and the supernatural, with an auteur perspective and a strong visual identity.',
+      'about.3': 'We see cinema as a living organism, always changing. Like sourdough, our stories grow, mutate and connect.',
+      'contact.title': 'Contact', 'contact.eyebrow': "Let's talk",
+      'contact.lede': 'We are open to new projects, collaborations and ideas.',
+      'copy': 'Copy', 'copied': 'Copied', 'city': 'Madrid, Spain', 'mail.label': 'Email',
+      'doc.title': 'Masamadre Films', 'nav.label': 'Main',
+      'page.prev': 'Previous projects', 'page.next': 'More projects', 'more.projects': 'More projects',
+      'back': 'Back to projects', 'synopsis': 'Synopsis', 'prev.project': 'Previous', 'next.project': 'Next',
+      'c.production': 'Production', 'c.direction': 'Director', 'c.script': 'Screenplay', 'c.duration': 'Running time', 'c.festivals': 'Festivals', 'c.status': 'Status', 'trailer': 'Watch trailer', 'load.error': 'The projects could not be loaded. Please reload the page.', 'load.empty': 'Projects coming soon.'
+    }
+  };
+  var LANG = 'es';
+  function t(k) { return (I18N[LANG] && I18N[LANG][k]) || I18N.es[k] || ''; }
+  function setLang(lang, save) {
+    if (!I18N[lang]) return;
+    LANG = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { el.alt = t(el.dataset.i18nAlt); });
+    document.querySelectorAll('[data-i18n-label]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nLabel)); });
+    document.querySelector('.nav').setAttribute('aria-label', t('nav.label'));
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
+    if (save) { try { localStorage.setItem('mm-lang', lang); } catch (e) {} }
+    if (window.renderProjects) window.renderProjects();
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.dataset.lang, true); });
+  });
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('mm-lang'); } catch (e) {}
+    var hash = (location.hash || '').slice(1);
+    var start = (hash === 'en' || hash === 'es') ? hash : saved || ((navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+    setLang(start, false);
+  })();
+</script>
+<script>
+  // grain texture
+  (function () {
+    try {
+      var c = document.createElement('canvas'); c.width = c.height = 180;
+      var x = c.getContext('2d'), d = x.createImageData(180, 180);
+      for (var i = 0; i < d.data.length; i += 4) { var v = Math.random() * 255; d.data[i] = d.data[i+1] = d.data[i+2] = v; d.data[i+3] = 255; }
+      x.putImageData(d, 0, 0);
+      document.documentElement.style.setProperty('--grain', 'url(' + c.toDataURL() + ')');
+    } catch (e) {}
+  })();
+
+  // ---------- projects: data ----------
+  // Projects live in content/projects.json and are edited from /admin.
+  var TYPES = {
+    short: { es: 'Cortometraje', en: 'Short film' }, feature: { es: 'Largometraje', en: 'Feature film' },
+    series: { es: 'Serie', en: 'Series' }, documentary: { es: 'Documental', en: 'Documentary' },
+    commercial: { es: 'Publicidad', en: 'Commercial' }, videoclip: { es: 'Videoclip', en: 'Music video' }
+  };
+  var PROJECTS = [];
+  function slugify(s) {
+    return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function paras(s) { return String(s || '').split(/\n\s*\n/).map(function (x) { return x.trim(); }).filter(Boolean); }
+  function normalize(list) {
+    var used = {};
+    return (list || []).filter(function (r) { return r && r.title && r.published !== false; }).map(function (r) {
+      var slug = slugify(r.slug || r.title) || 'proyecto', n = 2, base = slug;
+      while (used[slug]) slug = base + '-' + (n++);
+      used[slug] = true;
+      var syEs = paras(r.synopsis_es), syEn = paras(r.synopsis_en);
+      return {
+        slug: slug, title: r.title, year: r.year ? String(r.year) : '', img: r.image || '', inDev: r.status === 'development',
+        type: TYPES[r.type] || { es: r.type || '', en: r.type || '' },
+        alt: { es: r.alt_es || r.title, en: r.alt_en || r.alt_es || r.title },
+        short: { es: r.short_es || '', en: r.short_en || r.short_es || '' },
+        synopsis: { es: syEs, en: syEn.length ? syEn : syEs },
+        credits: { production: 'Masamadre Films', direction: r.direction || '', script: r.script || '', duration: r.duration || '', festivals: r.festivals || '' },
+        trailer: r.trailer || ''
+      };
+    });
+  }
+  function L(o) { return (o && (o[LANG] || o.es)) || ''; }
+  function metaYear(p) { return p.inDev ? t('type.indev') : p.year; }
+  function metaLine(p) { var y = metaYear(p); return L(p.type) + (y ? ' \u00b7 ' + y : ''); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ---------- projects: list ----------
+  var track = document.getElementById('track');
+  var prevBtn = document.getElementById('prev-page'), nextBtn = document.getElementById('next-page');
+  var loadState = 'loading';
+  function renderList() {
+    if (!PROJECTS.length) { track.innerHTML = loadState === 'loading' ? '' : '<p class="track-msg">' + t(loadState === 'error' ? 'load.error' : 'load.empty') + '</p>'; prevBtn.disabled = nextBtn.disabled = true; return; }
+    track.innerHTML = PROJECTS.map(function (p) {
+      return '<a class="card" href="#p-' + p.slug + '" id="card-' + p.slug + '">' +
+        '<div class="thumb"><img src="' + p.img + '" width="360" height="240" loading="lazy" decoding="async" alt="' + esc(L(p.alt)) + '"></div>' +
+        '<h3>' + esc(p.title) + '</h3>' +
+        '<div class="meta"><span>' + esc(L(p.type)) + '</span><span>' + esc(metaYear(p)) + '</span></div>' +
+        '<p>' + esc(L(p.short)) + '</p></a>';
+    }).join('');
+    watchEnds();
+  }
+  function step() { var gap = parseFloat(getComputedStyle(track).columnGap) || 0; return track.clientWidth + gap; }
+  prevBtn.addEventListener('click', function () { track.scrollBy({ left: -step() }); });
+  nextBtn.addEventListener('click', function () { track.scrollBy({ left: step() }); });
+  var endsObs = null;
+  function watchEnds() {
+    if (endsObs) endsObs.disconnect();
+    var cards = track.querySelectorAll('.card'); if (!cards.length || !('IntersectionObserver' in window)) return;
+    endsObs = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var full = e.intersectionRatio > 0.9;
+        if (e.target === cards[0]) prevBtn.disabled = full;
+        if (e.target === cards[cards.length - 1]) nextBtn.disabled = full;
+      });
+    }, { root: track, threshold: [0, 0.9, 1] });
+    endsObs.observe(cards[0]); endsObs.observe(cards[cards.length - 1]);
+  }
+
+  // ---------- projects: project page ----------
+  var view = document.getElementById('project-view'), current = null;
+  function renderView(p) {
+    var i = PROJECTS.indexOf(p);
+    document.getElementById('pv-bg').style.backgroundImage = 'url(' + p.img + ')';
+    var img = document.getElementById('pv-img'); img.src = p.img; img.alt = L(p.alt);
+    document.getElementById('pv-meta').textContent = L(p.type) + ' · ' + metaYear(p);
+    document.getElementById('pv-title').textContent = p.title;
+    document.getElementById('pv-logline').textContent = L(p.short);
+    document.getElementById('pv-syn').innerHTML = L(p.synopsis).map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('');
+    var rows = [['c.direction', p.credits.direction], ['c.script', p.credits.script], ['c.production', p.credits.production], ['c.duration', p.credits.duration], ['c.festivals', p.credits.festivals]];
+    document.getElementById('pv-credits').innerHTML = rows.filter(function (r) { return r[1]; }).map(function (r) { return '<dt>' + t(r[0]) + '</dt><dd>' + esc(r[1]) + '</dd>'; }).join('');
+    var tr = document.getElementById('pv-trailer');
+    tr.hidden = !p.trailer; tr.innerHTML = p.trailer ? '<a href="' + esc(p.trailer) + '" target="_blank" rel="noopener">' + t('trailer') + '</a>' : '';
+    var prev = PROJECTS[(i - 1 + PROJECTS.length) % PROJECTS.length], next = PROJECTS[(i + 1) % PROJECTS.length];
+    document.getElementById('pv-nav').innerHTML =
+      '<a href="#p-' + prev.slug + '"><small>&larr; ' + t('prev.project') + '</small><span>' + esc(prev.title) + '</span></a>' +
+      '<a href="#p-' + next.slug + '"><small>' + t('next.project') + ' &rarr;</small><span>' + esc(next.title) + '</span></a>';
+    document.title = p.title + ' | Masamadre Films';
+  }
+  function route(e) {
+    var hash = decodeURIComponent((location.hash || '').slice(1));
+    var p = hash.indexOf('p-') === 0 ? PROJECTS.filter(function (x) { return x.slug === hash.slice(2); })[0] : null;
+    if (p) {
+      current = p; renderView(p);
+      view.hidden = false; document.body.classList.add('pv-open');
+      view.style.animation = 'none'; void view.offsetWidth; view.style.animation = '';
+      window.scrollTo(0, 0);
+      if (e) document.getElementById('pv-back').focus({ preventScroll: true });
+      if (window.setActive) window.setActive('proyectos');
+    } else if (current) {
+      var was = current; current = null;
+      view.hidden = true; document.body.classList.remove('pv-open');
+      document.title = 'Masamadre Films';
+      var target = document.getElementById(hash) || document.getElementById('proyectos');
+      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+      if (target.id === 'proyectos') {
+        var card = document.getElementById('card-' + was.slug);
+        if (card) { card.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'nearest' }); card.focus({ preventScroll: true }); }
+      }
+    }
+  }
+  window.addEventListener('hashchange', route);
+  window.renderProjects = function () { renderList(); if (current) renderView(current); };
+  renderList();
+  fetch('content/projects.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (d) { PROJECTS = normalize(d.projects); loadState = 'ok'; })
+    .catch(function () { loadState = 'error'; })
+    .then(function () { renderList(); route(); });
+
+  // copy email
+  var copyBtn = document.getElementById('copy-mail');
+  copyBtn.addEventListener('click', function () {
+    var t = 'info@masamadrefilms.com';
+    function done() { copyBtn.textContent = t('copied'); setTimeout(function () { copyBtn.textContent = t('copy'); }, 1800); }
+    try {
+      navigator.clipboard.writeText(t).then(done, select);
+    } catch (e) { select(); }
+    function select() { var r = document.createRange(); r.selectNodeContents(document.getElementById('mail')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+
+  // active nav link: set on click, and follow scroll position
+  var links = document.querySelectorAll('.nav a');
+  var sections = document.querySelectorAll('section.panel');
+  function setActive(id) {
+    if (document.body.classList.contains('pv-open')) id = 'proyectos';
+    links.forEach(function (l) { l.classList.toggle('on', l.getAttribute('href') === '#' + id); });
+  }
+  window.setActive = setActive;
+  links.forEach(function (l) {
+    l.addEventListener('click', function () { setActive(l.getAttribute('href').slice(1)); });
+  });
+  document.querySelectorAll('a.btn[href^="#"]').forEach(function (b) {
+    b.addEventListener('click', function () { setActive(b.getAttribute('href').slice(1)); });
+  });
+  var ticking = false;
+  function onScroll() {
+    ticking = false;
+    var line = Math.min(window.innerHeight, 900) * 0.4, current = 'inicio';
+    sections.forEach(function (s) { if (s.getBoundingClientRect().top <= line) current = s.id; });
+    setActive(current);
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  if (location.hash) setActive(location.hash.slice(1));
+
+  // about: switch between open and closed eye every 15-20 s while on screen,
+  // and also each time you arrive at the section from another one
+  (function () {
+    var eyes = document.querySelector('.eyes'), about = document.getElementById('about');
+    if (!eyes) return;
+    var timer = null, wasIn = false;
+    function inView() {
+      var r = about.getBoundingClientRect(), vh = Math.min(window.innerHeight, 900);
+      return r.top < vh * 0.6 && r.bottom > vh * 0.4 && !document.hidden;
+    }
+    function swap() { eyes.classList.toggle('blink'); }
+    function schedule() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        if (inView()) swap();
+        schedule();
+      }, 15000 + Math.random() * 5000);
+    }
+    function check() {
+      var now = inView();
+      if (now && !wasIn) { swap(); schedule(); }
+      wasIn = now;
+    }
+    window.addEventListener('scroll', function () { requestAnimationFrame(check); }, { passive: true });
+    document.querySelectorAll('.nav a').forEach(function (l) {
+      l.addEventListener('click', function () { setTimeout(check, 700); });
+    });
+    wasIn = inView();
+    schedule();
+  })();
+</script>
+</body>
+</html>
