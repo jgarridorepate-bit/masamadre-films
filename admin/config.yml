@@ -108,6 +108,14 @@ collections:
                   hint: "Separados por comas." }
               - { name: trailer, label: "Enlace al tráiler", widget: string, required: false,
                   hint: "Enlace de Vimeo o YouTube. Si está vacío no aparece el botón." }
+              - name: logos
+                label: "Logos (selecciones, festivales, apoyos)"
+                widget: list
+                required: false
+                min: 0
+                max: 3
+                field: { name: logo, label: "Logo", widget: image, choose_url: false,
+                         hint: "PNG blanco con fondo transparente. Hasta 3, aparecen debajo de la foto del proyecto." }
 
   - name: textos
     label: Textos de la web

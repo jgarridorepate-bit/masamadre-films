@@ -217,6 +217,9 @@
   .pv-grid { margin-top: clamp(32px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
   .pv-still { margin: 0; aspect-ratio: 3 / 2; max-width: 100%; overflow: hidden; border: 1px solid rgba(239,220,214,.14); background: var(--blood); }
   .pv-still img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pv-logos { display: flex; align-items: center; gap: clamp(20px, 4vw, 40px); margin-top: clamp(16px, 3vw, 28px); flex-wrap: wrap; }
+  .pv-logos img { height: clamp(28px, 4vw, 40px); width: auto; max-width: 130px; object-fit: contain; opacity: .8; transition: opacity .25s; }
+  .pv-logos img:hover { opacity: 1; }
   .pv-meta { margin: 0 0 14px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
   .pv-text { min-width: 0; container-type: inline-size; }
   .pv-title { margin: 0; font-family: var(--display); font-weight: 300; text-transform: uppercase; letter-spacing: .04em; line-height: 1.02; color: var(--rose); font-size: clamp(30px, 4.4vw, 72px); text-wrap: balance; max-width: 100%; }
@@ -399,7 +402,10 @@
   <div class="pv-inner">
     <a class="pv-back" id="pv-back" href="#proyectos"><span aria-hidden="true">&larr;</span> <span data-i18n="back">Volver a proyectos</span></a>
     <div class="pv-grid">
-      <figure class="pv-still"><img id="pv-img" src="" alt=""></figure>
+      <div class="pv-media">
+        <figure class="pv-still"><img id="pv-img" src="" alt=""></figure>
+        <div class="pv-logos" id="pv-logos" aria-hidden="true"></div>
+      </div>
       <div class="pv-text">
         <p class="pv-meta" id="pv-meta"></p>
         <h1 class="pv-title" id="pv-title"></h1>
@@ -562,7 +568,8 @@
         people: (r.credits || []).filter(function (c) { return c && c.name; }).map(function (c) { return { role: (c.role && c.role !== 'otro' && ROLES[c.role]) || { es: c.role_es || '', en: c.role_en || c.role_es || '' }, name: c.name }; }),
         genre: { es: r.genre_es || '', en: r.genre_en || r.genre_es || '' },
         stage: { es: r.stage_es || '', en: r.stage_en || r.stage_es || '' },
-        trailer: r.trailer || ''
+        trailer: r.trailer || '',
+        logos: (r.logos || []).filter(Boolean).slice(0, 3)
       };
     });
   }
@@ -652,6 +659,9 @@
     var i = PROJECTS.indexOf(p);
     document.getElementById('pv-bg').style.backgroundImage = 'url("' + imgSrc(p.img, 600) + '")';
     var img = document.getElementById('pv-img'); img.src = imgSrc(p.img, 1600); img.alt = L(p.alt);
+    document.getElementById('pv-logos').innerHTML = p.logos.map(function (src) {
+      return '<img src="' + imgSrc(src, 260) + '" alt="">';
+    }).join('');
     document.getElementById('pv-meta').textContent = metaLine(p);
     document.getElementById('pv-title').textContent = p.title;
     document.getElementById('pv-logline').textContent = L(p.short);
