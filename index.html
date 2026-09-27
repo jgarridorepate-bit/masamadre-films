@@ -513,6 +513,15 @@
     series: { es: 'Serie', en: 'Series' }, documentary: { es: 'Documental', en: 'Documentary' },
     commercial: { es: 'Publicidad', en: 'Commercial' }, videoclip: { es: 'Videoclip', en: 'Music video' }
   };
+  var ROLES = {
+    'directora': { es: 'Directora', en: 'Director' }, 'director': { es: 'Director', en: 'Director' },
+    'directoras': { es: 'Directoras', en: 'Directors' }, 'directores': { es: 'Directores', en: 'Directors' },
+    'guionista': { es: 'Guionista', en: 'Screenwriter' }, 'guionistas': { es: 'Guionistas', en: 'Screenwriters' },
+    'directora-guionista': { es: 'Directora y guionista', en: 'Writer-director' }, 'director-guionista': { es: 'Director y guionista', en: 'Writer-director' },
+    'productora': { es: 'Productora', en: 'Producer' }, 'productor': { es: 'Productor', en: 'Producer' },
+    'productoras': { es: 'Productoras', en: 'Producers' }, 'productores': { es: 'Productores', en: 'Producers' },
+    'dop-f': { es: 'Directora de fotografía', en: 'Cinematographer' }, 'dop-m': { es: 'Director de fotografía', en: 'Cinematographer' }
+  };
   var PROJECTS = [];
   function slugify(s) {
     return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -532,7 +541,7 @@
         short: { es: r.short_es || '', en: r.short_en || r.short_es || '' },
         synopsis: { es: syEs, en: syEn.length ? syEn : syEs },
         credits: { production: 'Masamadre Films', direction: r.direction || '', script: r.script || '', duration: r.duration || '', festivals: r.festivals || '' },
-        people: (r.credits || []).filter(function (c) { return c && c.name; }).map(function (c) { return { role: { es: c.role_es || '', en: c.role_en || c.role_es || '' }, name: c.name }; }),
+        people: (r.credits || []).filter(function (c) { return c && c.name; }).map(function (c) { return { role: (c.role && c.role !== 'otro' && ROLES[c.role]) || { es: c.role_es || '', en: c.role_en || c.role_es || '' }, name: c.name }; }),
         genre: { es: r.genre_es || '', en: r.genre_en || r.genre_es || '' },
         stage: { es: r.stage_es || '', en: r.stage_en || r.stage_es || '' },
         trailer: r.trailer || ''

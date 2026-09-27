@@ -68,8 +68,41 @@ collections:
               - { name: synopsis_es, label: "Sinopsis (ES)", widget: text, required: false,
                   hint: "Deja una línea en blanco entre párrafos." }
               - { name: synopsis_en, label: "Sinopsis (EN)", widget: text, required: false }
-              - { name: direction, label: "Dirección", widget: string, required: false }
-              - { name: script, label: "Guion", widget: string, required: false }
+              - name: credits
+                label: "Créditos"
+                label_singular: "crédito"
+                widget: list
+                required: false
+                summary: "{{fields.name}}"
+                hint: "Una fila por persona o grupo."
+                fields:
+                  - name: role
+                    label: "Rol"
+                    widget: select
+                    default: directora
+                    options:
+                      - { label: "Directora", value: directora }
+                      - { label: "Director", value: director }
+                      - { label: "Directoras", value: directoras }
+                      - { label: "Directores", value: directores }
+                      - { label: "Guionista", value: guionista }
+                      - { label: "Guionistas", value: guionistas }
+                      - { label: "Directora y guionista", value: directora-guionista }
+                      - { label: "Director y guionista", value: director-guionista }
+                      - { label: "Productora", value: productora }
+                      - { label: "Productor", value: productor }
+                      - { label: "Productoras", value: productoras }
+                      - { label: "Productores", value: productores }
+                      - { label: "Directora de fotografía", value: dop-f }
+                      - { label: "Director de fotografía", value: dop-m }
+                      - { label: "Otro (escríbelo abajo)", value: otro }
+                  - { name: name, label: "Nombre", widget: string, hint: "Si son varias personas: Nadine Lifschitz y Gádor Camacho" }
+                  - { name: role_es, label: "Otro rol (ES)", widget: string, required: false, hint: "Solo si en Rol has elegido Otro." }
+                  - { name: role_en, label: "Otro rol (EN)", widget: string, required: false }
+              - { name: genre_es, label: "Género (ES)", widget: string, required: false, hint: "p. ej. Terror" }
+              - { name: genre_en, label: "Género (EN)", widget: string, required: false, hint: "p. ej. Horror" }
+              - { name: stage_es, label: "Estado (ES)", widget: string, required: false, hint: "p. ej. Desarrollo y financiación. Aparece en la ficha del proyecto." }
+              - { name: stage_en, label: "Estado (EN)", widget: string, required: false }
               - { name: duration, label: "Duración", widget: string, required: false, hint: "p. ej. 18 min" }
               - { name: festivals, label: "Festivales", widget: string, required: false,
                   hint: "Separados por comas." }
