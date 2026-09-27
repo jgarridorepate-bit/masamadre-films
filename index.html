@@ -539,6 +539,12 @@
       };
     });
   }
+  // Uploaded stills can be huge: on the live site, ask Netlify's image service for a resized WebP copy.
+  var ON_NETLIFY = /(^|\.)masamadrefilms\.com$|\.netlify\.app$/.test(location.hostname);
+  function imgSrc(src, w) {
+    if (!src || !ON_NETLIFY || /^(https?:|data:)/.test(src)) return src;
+    return '/.netlify/images?url=' + encodeURIComponent('/' + src.replace(/^\/+/, '')) + '&w=' + w + '&fm=webp&q=78';
+  }
   function L(o) { return (o && (o[LANG] || o.es)) || ''; }
   function metaYear(p) { return p.inDev ? t('type.indev') : p.year; }
   function metaLine(p) { var y = (p.inDev && L(p.stage)) ? p.year : metaYear(p); return L(p.type) + (y ? ' \u00b7 ' + y : ''); }
@@ -589,7 +595,7 @@
     if (!PROJECTS.length) { track.innerHTML = loadState === 'loading' ? '' : '<p class="track-msg">' + t(loadState === 'error' ? 'load.error' : 'load.empty') + '</p>'; prevBtn.disabled = nextBtn.disabled = true; return; }
     track.innerHTML = PROJECTS.map(function (p) {
       return '<a class="card" href="#p-' + p.slug + '" id="card-' + p.slug + '">' +
-        '<div class="thumb"><img src="' + p.img + '" width="360" height="240" loading="lazy" decoding="async" alt="' + esc(L(p.alt)) + '"></div>' +
+        '<div class="thumb"><img src="' + imgSrc(p.img, 720) + '" width="360" height="240" loading="lazy" decoding="async" alt="' + esc(L(p.alt)) + '"></div>' +
         '<h3>' + esc(p.title) + '</h3>' +
         '<div class="meta"><span>' + esc(L(p.type)) + '</span><span>' + esc(metaYear(p)) + '</span></div>' +
         '<p>' + esc(L(p.short)) + '</p></a>';
@@ -617,8 +623,8 @@
   var view = document.getElementById('project-view'), current = null;
   function renderView(p) {
     var i = PROJECTS.indexOf(p);
-    document.getElementById('pv-bg').style.backgroundImage = 'url(' + p.img + ')';
-    var img = document.getElementById('pv-img'); img.src = p.img; img.alt = L(p.alt);
+    document.getElementById('pv-bg').style.backgroundImage = 'url("' + imgSrc(p.img, 600) + '")';
+    var img = document.getElementById('pv-img'); img.src = imgSrc(p.img, 1600); img.alt = L(p.alt);
     document.getElementById('pv-meta').textContent = metaLine(p);
     document.getElementById('pv-title').textContent = p.title;
     document.getElementById('pv-logline').textContent = L(p.short);
