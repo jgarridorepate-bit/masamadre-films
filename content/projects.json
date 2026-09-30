@@ -1,36 +1,6 @@
 {
   "projects": [
     {
-      "alt_es": "Cartela señoras",
-      "genre_en": "Dark Comedy",
-      "genre_es": "Comedia Negra",
-      "stage_en": "Development",
-      "script": "",
-      "slug": "",
-      "short_en": "They’re neighbors. They’re old. They hate each other. They’ll spend the rest of their lives together.",
-      "published": true,
-      "stage_es": "Desarrollo",
-      "short_es": "Son vecinas. Son viejas. Se odian. Pasarán juntas el resto de sus vidas.",
-      "status": "development",
-      "trailer": "",
-      "duration": "",
-      "synopsis_en": "Señoras was selected for the 2026 Fantastika Forum and presented as a pitch to production companies from around the world.",
-      "title": "Señoras",
-      "synopsis_es": "Señoras fue seleccionado en Fantastika Forum de 2026 y presentado en formato pitch frente a productoras de todo el mundo.",
-      "credits": [
-        {
-          "role": "guionistas",
-          "name": "Nadine Lifschitz y Gádor Camacho"
-        }
-      ],
-      "type": "feature",
-      "image": "img/uploads/screenshot-2026-09-27-at-18.49.37.png",
-      "festivals": "",
-      "year": "",
-      "alt_en": "Pared rota con hojas verdes y el titulo Señoras",
-      "direction": ""
-    },
-    {
       "genre_en": "Body-horror",
       "genre_es": "Terror, Body-horror",
       "stage_en": "Development and financing",
@@ -70,6 +40,36 @@
       "type": "short",
       "image": "img/uploads/captura-de-pantalla-2026-09-30-a-las-13.57.27.png",
       "year": "2026"
+    },
+    {
+      "alt_es": "Cartela señoras",
+      "genre_en": "Dark Comedy",
+      "genre_es": "Comedia Negra",
+      "stage_en": "Development",
+      "script": "",
+      "slug": "",
+      "short_en": "They’re neighbors. They’re old. They hate each other. They’ll spend the rest of their lives together.",
+      "published": true,
+      "stage_es": "Desarrollo",
+      "short_es": "Son vecinas. Son viejas. Se odian. Pasarán juntas el resto de sus vidas.",
+      "status": "development",
+      "trailer": "",
+      "duration": "",
+      "synopsis_en": "Señoras was selected for the 2026 Fantastika Forum and presented as a pitch to production companies from around the world.",
+      "title": "Señoras",
+      "synopsis_es": "Señoras fue seleccionado en Fantastika Forum de 2026 y presentado en formato pitch frente a productoras de todo el mundo.",
+      "credits": [
+        {
+          "role": "guionistas",
+          "name": "Nadine Lifschitz y Gádor Camacho"
+        }
+      ],
+      "type": "feature",
+      "image": "img/uploads/screenshot-2026-09-27-at-18.49.37.png",
+      "festivals": "",
+      "year": "",
+      "alt_en": "Pared rota con hojas verdes y el titulo Señoras",
+      "direction": ""
     }
   ]
 }
