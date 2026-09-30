@@ -32,9 +32,6 @@
     },
     {
       "genre_en": "Body-horror",
-      "logos": [
-        "img/uploads/idoy_agten_logos.png"
-      ],
       "genre_es": "Terror, Body-horror",
       "stage_en": "Development and financing",
       "short_en": "The sourdough needs the perfect vessel. It is you.",
@@ -54,6 +51,25 @@
       ],
       "type": "short",
       "image": "img/uploads/masa-madre-corto.png"
+    },
+    {
+      "genre_es": "Documental Experimental",
+      "published": true,
+      "stage_es": "Postproducción",
+      "short_es": "Un cortometraje sospechoso de herejía",
+      "status": "released",
+      "duration": "20'",
+      "title": "El San Judas",
+      "synopsis_es": "El San Judas es una coproducción con Mammut Films, y ha sido receptor de las Ayudas a producción de cortometraje de la Comunidad Madrid 2026",
+      "credits": [
+        {
+          "role": "director-guionista",
+          "name": "Efrén Tarifa"
+        }
+      ],
+      "type": "short",
+      "image": "img/uploads/captura-de-pantalla-2026-09-30-a-las-13.57.27.png",
+      "year": "2026"
     }
   ]
 }
